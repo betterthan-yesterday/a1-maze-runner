@@ -13,18 +13,18 @@ public class Main {
     public static void main(String[] args) {
         try {
             if (!("-i".equals(args[0]) || "--input".equals(args[0]))) {
-                System.err.println("/!\\ An error has occured (no input) /!\\");
+                logger.error("/!\\ An error has occured (no input) /!\\");
                 System.exit(1);
             }
         } catch (Exception e) {
-            System.err.println("/!\\ An error has occured (no args)) /!\\");
+            logger.error("/!\\ An error has occured (no args)) /!\\");
             System.exit(1);
         }
 
-        System.out.println("** Starting Maze Runner");
+        logger.info("** Starting Maze Runner");
         try {
-            System.out.println("**** Reading the maze from file " + args[1]);
-            BufferedReader reader = new BufferedReader(new FileReader(args[0]));
+            logger.info("**** Reading the maze from file " + args[1]);
+            BufferedReader reader = new BufferedReader(new FileReader(args[1]));
             String line;
             while ((line = reader.readLine()) != null) {
                 for (int idx = 0; idx < line.length(); idx++) {
@@ -38,10 +38,10 @@ public class Main {
             }
             reader.close();
         } catch(Exception e) {
-            System.err.println("/!\\ An error has occured (file not found) /!\\");
+            logger.error("/!\\ An error has occured (file not found) /!\\");
         }
-        System.out.println("**** Computing path");
-        System.out.println("PATH NOT COMPUTED");
-        System.out.println("** End of MazeRunner");
+        logger.info("**** Computing path");
+        logger.info("PATH NOT COMPUTED");
+        logger.info("** End of MazeRunner");
     }
 }
