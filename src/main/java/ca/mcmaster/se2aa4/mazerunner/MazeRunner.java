@@ -2,11 +2,11 @@ package ca.mcmaster.se2aa4.mazerunner;
 
 import java.io.File;
 
-public class Navigator {
+public class MazeRunner {
 
     public final Maze maze;
 
-    public Navigator(File pathname) {
+    public MazeRunner(File pathname) {
         this.maze = new Maze(pathname);
     }
 
