@@ -8,9 +8,11 @@ import java.io.IOException;
 public class Maze {
 
     public final File PATH_FILE;
+    private final Navigator pather;
 
     public Maze(File filename) {
         this.PATH_FILE = filename; 
+        this.pather = new Navigator(PATH_FILE);
     }
 
     public void print_maze() throws IOException {
@@ -30,7 +32,10 @@ public class Maze {
     }
 
     public MazePath get_path() {
-        PathFinder pather = new PathFinder(PATH_FILE);
-        return pather.navigate();
+        return pather.discover_path();
+    }
+
+    public boolean verify_path(MazePath seq) {
+        return pather.navigate_path(seq);
     }
 }
