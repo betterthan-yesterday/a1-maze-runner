@@ -4,7 +4,7 @@ import java.io.File;
 
 public class MazeRunner {
 
-    public final Maze maze;
+    private final Maze maze;
 
     public MazeRunner(File pathname) {
         this.maze = new Maze(pathname);

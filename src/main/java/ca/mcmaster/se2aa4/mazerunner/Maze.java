@@ -8,11 +8,9 @@ import java.io.IOException;
 public class Maze {
 
     public final File PATH_FILE;
-    private final MazeRunner runner;
 
     public Maze(File filename) {
         this.PATH_FILE = filename; 
-        this.runner = new MazeRunner(PATH_FILE);
     }
 
     public void print_maze() throws IOException {
@@ -31,11 +29,15 @@ public class Maze {
         reader.close();
     }
 
+    private MazeRunner get_runner() {
+        return new MazeRunner(PATH_FILE);
+    }
+
     public MazePath get_path() {
-        return runner.discover_path();
+        return get_runner().discover_path();
     }
 
     public boolean verify_path(MazePath seq) {
-        return runner.navigate_path(seq);
+        return get_runner().navigate_path(seq);
     }
 }
