@@ -23,6 +23,7 @@ public class Main {
             Configuration config = configure(args);
             logger.info("**** Reading the maze from file " + config.filename);
             Maze themaze = new Maze(config.filename);
+            MazePath thepath = new MazePath(config.path);
 
             try {
                 themaze.print_maze();
@@ -30,30 +31,40 @@ public class Main {
                 logger.error(ioe.getMessage());
             }
 
-            MazePath path_sequence = themaze.get_path();
-            System.out.println(path_sequence.sequence);
+            if (thepath.getSequence().isEmpty()) {
+                logger.info("**** Computing path");
+                MazePath path_sequence = themaze.get_path();
+                System.out.println("A valid path is " + path_sequence.getSequence());
+            } else {
+                logger.info("**** Verifying path");
+                Boolean path_verified = themaze.verify_path(thepath);
+                System.out.println("The inputed path is " + thepath.getSequence());
+                System.out.println("The inputed path is " + (path_verified ? "valid" : "invalid"));
+            }
 
         } catch (ParseException pe) {
             logger.error(pe.getMessage());
         }
-        logger.info("**** Computing path");
-        logger.info("PATH NOT COMPUTED");
         logger.info("** End of MazeRunner");
     }
 
     private static Configuration configure(String[] args) throws ParseException  {
         Options options = new Options();
-        Option input = new Option("i", "input", true, "File to read");
-        options.addOption(input);
+        Option input_file = new Option("i", "input", true, "File to read");
+        Option input_path = new Option("p", "path", true, "Path to verify");
+        input_path.setRequired(false);
+        options.addOption(input_file);
+        options.addOption(input_path);
 
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd = parser.parse(options, args);
 
-        File file_to_read = new File(cmd.getOptionValue(input));
-        return new Configuration(file_to_read);
+        File file_to_read = new File(cmd.getOptionValue(input_file));
+        String path_to_verify = cmd.getOptionValue(input_path);
+        return new Configuration(file_to_read, path_to_verify);
     }
 
-    private record Configuration(File filename) {
+    private record Configuration(File filename, String path) {
         
         Configuration {
         }

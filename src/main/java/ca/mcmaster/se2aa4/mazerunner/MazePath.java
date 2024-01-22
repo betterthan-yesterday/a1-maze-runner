@@ -2,9 +2,13 @@ package ca.mcmaster.se2aa4.mazerunner;
 
 public class MazePath {
 
-    public final String sequence;
+    private final String sequence;
 
-    public MazePath(String seq) {
-        this.sequence = seq;
+    public MazePath(String path) {
+        this.sequence = path;
+    }
+
+    public String getSequence() {
+        return this.sequence;
     }
 }
