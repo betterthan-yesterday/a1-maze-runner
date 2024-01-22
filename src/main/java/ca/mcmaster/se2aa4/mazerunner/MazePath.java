@@ -5,7 +5,7 @@ public class MazePath {
     private final String sequence;
 
     public MazePath(String path) {
-        this.sequence = path;
+        this.sequence = path != null ? path : "";
     }
 
     public String getSequence() {
