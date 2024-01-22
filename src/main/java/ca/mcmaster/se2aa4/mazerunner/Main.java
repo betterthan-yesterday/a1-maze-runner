@@ -26,7 +26,7 @@ public class Main {
             MazePath thepath = new MazePath(config.path);
 
             try {
-                themaze.print_maze();
+                themaze.printMaze();
             } catch (IOException ioe) {
                 logger.error(ioe.getMessage());
             }
@@ -37,7 +37,7 @@ public class Main {
                 System.out.println("A valid path is " + path_sequence.getSequence());
             } else {
                 logger.info("**** Verifying path");
-                Boolean path_verified = themaze.verify_path(thepath);
+                Boolean path_verified = themaze.verifyPath(thepath);
                 System.out.println("The inputed path is " + thepath.getSequence());
                 System.out.println("The inputed path is " + (path_verified ? "valid" : "invalid"));
             }
