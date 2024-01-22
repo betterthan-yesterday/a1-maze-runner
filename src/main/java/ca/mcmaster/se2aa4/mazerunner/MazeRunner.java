@@ -10,8 +10,8 @@ public class MazeRunner {
         this.maze = new Maze(pathname);
     }
 
-    public MazePath discover_path() {
-        return new MazePath("FF");
+    public MazePath discoverPath() {
+        return new MazePath("FFFFF");
     }
 
     public boolean navigate_path(MazePath seq) {

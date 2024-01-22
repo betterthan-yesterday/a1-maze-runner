@@ -33,8 +33,8 @@ public class Maze {
         return new MazeRunner(PATH_FILE);
     }
 
-    public MazePath get_path() {
-        return get_runner().discover_path();
+    public MazePath findCorrectPath() {
+        return get_runner().discoverPath();
     }
 
     public boolean verify_path(MazePath seq) {

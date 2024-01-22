@@ -33,7 +33,7 @@ public class Main {
 
             if (thepath.getSequence().isEmpty()) {
                 logger.info("**** Computing path");
-                MazePath path_sequence = themaze.get_path();
+                MazePath path_sequence = themaze.findCorrectPath();
                 System.out.println("A valid path is " + path_sequence.getSequence());
             } else {
                 logger.info("**** Verifying path");
