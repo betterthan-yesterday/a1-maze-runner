@@ -8,6 +8,10 @@ public abstract class PathAlgorithm {
         NORTH, EAST, SOUTH, WEST
     }
 
+    enum Move {
+        FORWARD, LEFT, RIGHT, BACK
+    }
+
     public int[][] maze_array;
     public int[] start;
     public int[] end;
@@ -59,6 +63,10 @@ public abstract class PathAlgorithm {
         return left_is_path;
     }
 
-    public abstract MazePath move();
+    public void updatePos() {
+
+    }
+
+    public abstract MazePath solve();
 
 }
