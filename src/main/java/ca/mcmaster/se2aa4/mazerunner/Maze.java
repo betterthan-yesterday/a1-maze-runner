@@ -11,8 +11,7 @@ public class Maze {
     private MazeRunner runner;
 
     public Maze(File filename) throws IOException {
-        // this.PATH_FILE = filename; 
-        this.PATH_FILE = new File("examples/straight.maz.txt");
+        this.PATH_FILE = filename;
         this.decoder = new MazeDecoder(PATH_FILE);
 
         this.maze_array = decoder.decode();

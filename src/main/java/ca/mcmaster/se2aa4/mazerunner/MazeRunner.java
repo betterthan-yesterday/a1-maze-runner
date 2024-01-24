@@ -29,7 +29,8 @@ public class MazeRunner {
 
     public MazePath discover() {
         PathAlgorithm algo = new RighthandAlgorithm(maze_array, start, end);
-        return new MazePath("FFFFF");
+        MazePath maze_solution = algo.solve();
+        return maze_solution;
     }
 
     public boolean navigate(MazePath seq) {
