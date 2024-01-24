@@ -1,11 +1,11 @@
-package ca.mcmaster.se2aa4.mazerunner.algorithms;
+package ca.mcmaster.se2aa4.mazerunner;
 
 public class Movement {
-    enum Direction {
+    public enum Direction {
         NORTH, EAST, SOUTH, WEST;
     }
 
-    enum Move {
+    public enum Move {
         FORWARD, LEFT, RIGHT, BACKWARD
     }
 

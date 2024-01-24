@@ -3,8 +3,9 @@ package ca.mcmaster.se2aa4.mazerunner.algorithms;
 import java.util.Arrays;
 
 import ca.mcmaster.se2aa4.mazerunner.MazePath;
-import ca.mcmaster.se2aa4.mazerunner.algorithms.Movement.Direction;
-import ca.mcmaster.se2aa4.mazerunner.algorithms.Movement.Move;
+import ca.mcmaster.se2aa4.mazerunner.Movement;
+import ca.mcmaster.se2aa4.mazerunner.Movement.Direction;
+import ca.mcmaster.se2aa4.mazerunner.Movement.Move;
 
 public class RighthandAlgorithm extends PathAlgorithm {
 

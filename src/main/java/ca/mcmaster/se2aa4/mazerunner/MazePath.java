@@ -9,6 +9,14 @@ public class MazePath {
     }
 
     public String getSequence() {
-        return this.sequence;
+        return sequence;
+    }
+
+    public char getMove(int index) {
+        return sequence.charAt(index);
+    }
+
+    public int length() {
+        return sequence.length();
     }
 }

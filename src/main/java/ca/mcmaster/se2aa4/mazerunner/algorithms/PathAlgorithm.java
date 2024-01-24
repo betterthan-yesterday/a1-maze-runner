@@ -1,7 +1,8 @@
 package ca.mcmaster.se2aa4.mazerunner.algorithms;
 
 import ca.mcmaster.se2aa4.mazerunner.MazePath;
-import ca.mcmaster.se2aa4.mazerunner.algorithms.Movement.Direction;
+import ca.mcmaster.se2aa4.mazerunner.Movement;
+import ca.mcmaster.se2aa4.mazerunner.Movement.Direction;
 
 public abstract class PathAlgorithm {
 
