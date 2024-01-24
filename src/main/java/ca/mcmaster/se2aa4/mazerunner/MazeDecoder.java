@@ -32,6 +32,22 @@ public class MazeDecoder {
         return maze_array;
     }
 
+    public void print() throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(filepath));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            for (int idx = 0; idx < line.length(); idx++) {
+                if (line.charAt(idx) == '#') {
+                    System.out.print("# ");
+                } else if (line.charAt(idx) == ' ') {
+                    System.out.print("- ");
+                }
+            }
+            System.out.print(System.lineSeparator());
+        }
+        reader.close();
+    }
+
     public int[][] decode() throws IOException {
         int[][] decoded = getMazeSize();
         System.out.println("The maze is " + row_num + " rows by " + column_num + " columns");
