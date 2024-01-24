@@ -9,7 +9,7 @@ public abstract class PathAlgorithm {
     }
 
     enum Move {
-        FORWARD, LEFT, RIGHT, BACK
+        FORWARD, LEFT, RIGHT, BACKWARD
     }
 
     public int[][] maze_array;
@@ -63,8 +63,30 @@ public abstract class PathAlgorithm {
         return left_is_path;
     }
 
-    public void updatePos() {
+    public void updatePos(Move move) {
+        switch (currentDir) {
+            case NORTH:
+                currentPos[0] = (move == Move.FORWARD) ? currentPos[0] - 1 : currentPos[0] + 1;
+            case EAST:
+                currentPos[1] = (move == Move.FORWARD) ? currentPos[1] + 1 : currentPos[1] - 1;
+            case SOUTH:
+                currentPos[0] = (move == Move.FORWARD) ? currentPos[0] + 1 : currentPos[0] - 1;
+            case WEST:
+                currentPos[1] = (move == Move.FORWARD) ? currentPos[1] - 1 : currentPos[1] + 1;
+        }
+    }
 
+    public void updateDir(Move move) {
+        switch (currentDir) {
+            case NORTH:
+                currentDir = (move == Move.RIGHT) ? Direction.EAST : Direction.WEST;
+            case EAST:
+                currentDir = (move == Move.RIGHT) ? Direction.SOUTH : Direction.NORTH;
+            case SOUTH:
+                currentDir = (move == Move.RIGHT) ? Direction.WEST : Direction.EAST;
+            case WEST:
+                currentDir = (move == Move.RIGHT) ? Direction.NORTH : Direction.SOUTH;
+        }
     }
 
     public abstract MazePath solve();
