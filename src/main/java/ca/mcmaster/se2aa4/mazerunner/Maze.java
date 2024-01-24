@@ -23,10 +23,10 @@ public class Maze {
     }
 
     public MazePath findCorrectPath() {
-        return runner.discover();
+        return runner.discoverPath();
     }
 
     public boolean verifyPath(MazePath seq) {
-        return runner.navigate(seq);
+        return runner.followPath(seq);
     }
 }

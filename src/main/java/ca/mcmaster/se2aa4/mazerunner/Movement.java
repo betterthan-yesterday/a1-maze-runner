@@ -1,16 +1,18 @@
-package ca.mcmaster.se2aa4.mazerunner.algorithms;
+package ca.mcmaster.se2aa4.mazerunner;
 
 public class Movement {
-    enum Direction {
+    public enum Direction {
         NORTH, EAST, SOUTH, WEST;
     }
 
-    enum Move {
+    public enum Move {
         FORWARD, LEFT, RIGHT, BACKWARD
     }
 
     public int[] updatePos(Move move, Direction dir, int[] currentPos) {
-        int[] newPos = currentPos;
+        int[] newPos = new int[2];
+        newPos[0] = currentPos[0];
+        newPos[1] = currentPos[1];
         switch (dir) {
             case NORTH -> newPos[0] = (move == Move.FORWARD) ? currentPos[0] - 1 : currentPos[0] + 1;
             case EAST -> newPos[1] = (move == Move.FORWARD) ? currentPos[1] + 1 : currentPos[1] - 1;

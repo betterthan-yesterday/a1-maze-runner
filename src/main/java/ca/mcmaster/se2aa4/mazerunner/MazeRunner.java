@@ -27,17 +27,17 @@ public class MazeRunner {
         };
     }
 
-    public MazePath discover() {
+    public MazePath discoverPath() {
         PathAlgorithm algo = new RighthandAlgorithm(maze_array, start, end);
         MazePath maze_solution = algo.solve();
         return maze_solution;
     }
 
-    public boolean navigate(MazePath seq) {
-        if (seq.getSequence().equals("FFFFF")) {
-            return true;
-        }
-        return false;
+    public boolean followPath(MazePath seq) {
+        Navigator nav = new Navigator(maze_array, seq);
+        boolean checkFromWest = nav.navigate(start, end);
+        boolean checkFromEast = nav.navigate(end, start);
+        return checkFromWest || checkFromEast;
     }
 
 }

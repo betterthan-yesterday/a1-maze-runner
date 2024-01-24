@@ -38,7 +38,7 @@ public class Main {
         MazePath thepath = new MazePath(config.path);
 
         try {
-            logger.info("**** Reading the maze from file " + config.filename);
+            logger.info("** Reading the maze from file " + config.filename);
             themaze.printMaze();
         } catch (IOException ioe) {
             logger.error(ioe.getMessage());
@@ -46,14 +46,14 @@ public class Main {
         }
 
         if (thepath.getSequence().isEmpty()) {
-            logger.info("**** Computing path");
+            logger.info("** Computing path");
             MazePath path_sequence = themaze.findCorrectPath();
             System.out.println("A valid path is " + path_sequence.getSequence());
         } else {
-            logger.info("**** Verifying path");
+            logger.info("** Verifying path");
             Boolean path_verified = themaze.verifyPath(thepath);
             System.out.println("The inputed path is " + thepath.getSequence());
-            System.out.println("The inputed path is " + (path_verified ? "valid" : "invalid"));
+            System.out.println((path_verified ? "correct path" : "incorrect path"));
         }
 
         logger.info("** End of MazeRunner");
