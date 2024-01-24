@@ -19,37 +19,43 @@ public class Main {
 
     public static void main(String[] args) {
         logger.info("** Starting Maze Runner");
+
+        Configuration config = null;
         try {
-            Configuration config = configure(args);
-            logger.info("**** Reading the maze from file " + config.filename);
-            Maze themaze;
-            try {
-                themaze = new Maze(config.filename);
-                MazePath thepath = new MazePath(config.path);
-
-                try {
-                    themaze.printMaze();
-                } catch (IOException ioe) {
-                    logger.error(ioe.getMessage());
-                }
-
-                if (thepath.getSequence().isEmpty()) {
-                    logger.info("**** Computing path");
-                    MazePath path_sequence = themaze.findCorrectPath();
-                    System.out.println("A valid path is " + path_sequence.getSequence());
-                } else {
-                    logger.info("**** Verifying path");
-                    Boolean path_verified = themaze.verifyPath(thepath);
-                    System.out.println("The inputed path is " + thepath.getSequence());
-                    System.out.println("The inputed path is " + (path_verified ? "valid" : "invalid"));
-                }
-            } catch (IOException ioe) {
-                logger.error(ioe.getMessage());
-                System.exit(1);
-            }
+            config = configure(args);
         } catch (ParseException pe) {
             logger.error(pe.getMessage());
+            System.exit(1);
         }
+
+        Maze themaze = null;
+        try {
+            themaze = new Maze(config.filename);
+        } catch (IOException ioe) {
+            logger.error(ioe.getMessage());
+            System.exit(1);
+        }
+        MazePath thepath = new MazePath(config.path);
+
+        try {
+            logger.info("**** Reading the maze from file " + config.filename);
+            themaze.printMaze();
+        } catch (IOException ioe) {
+            logger.error(ioe.getMessage());
+            System.exit(1);
+        }
+
+        if (thepath.getSequence().isEmpty()) {
+            logger.info("**** Computing path");
+            MazePath path_sequence = themaze.findCorrectPath();
+            System.out.println("A valid path is " + path_sequence.getSequence());
+        } else {
+            logger.info("**** Verifying path");
+            Boolean path_verified = themaze.verifyPath(thepath);
+            System.out.println("The inputed path is " + thepath.getSequence());
+            System.out.println("The inputed path is " + (path_verified ? "valid" : "invalid"));
+        }
+
         logger.info("** End of MazeRunner");
     }
 
