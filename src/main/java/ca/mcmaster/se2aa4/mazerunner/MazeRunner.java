@@ -1,13 +1,12 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import java.io.File;
 
 public class MazeRunner {
 
-    private final Maze maze;
+    private final int[][] maze_array;
 
-    public MazeRunner(File pathname) {
-        this.maze = new Maze(pathname);
+    public MazeRunner(int[][] array) {
+        this.maze_array = array;
     }
 
     public MazePath discoverPath() {
