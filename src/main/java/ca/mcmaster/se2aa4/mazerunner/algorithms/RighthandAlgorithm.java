@@ -13,9 +13,16 @@ public class RighthandAlgorithm extends PathAlgorithm {
     @Override
     public MazePath move() {
         String seq = "";
+        while (currentPos != end) {
+            if (checkRight()) {
+                seq += "R";
+            } else if (checkFront()) {
+                seq += "F";
+            } else if (checkLeft()) {
+                seq += "L";
+            }
+        }
         return new MazePath(seq);
     }
-
-
 
 }
