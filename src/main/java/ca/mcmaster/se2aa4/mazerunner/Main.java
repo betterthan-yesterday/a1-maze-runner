@@ -22,26 +22,31 @@ public class Main {
         try {
             Configuration config = configure(args);
             logger.info("**** Reading the maze from file " + config.filename);
-            Maze themaze = new Maze(config.filename);
-            MazePath thepath = new MazePath(config.path);
-
+            Maze themaze;
             try {
-                themaze.printMaze();
+                themaze = new Maze(config.filename);
+                MazePath thepath = new MazePath(config.path);
+
+                try {
+                    themaze.printMaze();
+                } catch (IOException ioe) {
+                    logger.error(ioe.getMessage());
+                }
+
+                if (thepath.getSequence().isEmpty()) {
+                    logger.info("**** Computing path");
+                    MazePath path_sequence = themaze.findCorrectPath();
+                    System.out.println("A valid path is " + path_sequence.getSequence());
+                } else {
+                    logger.info("**** Verifying path");
+                    Boolean path_verified = themaze.verifyPath(thepath);
+                    System.out.println("The inputed path is " + thepath.getSequence());
+                    System.out.println("The inputed path is " + (path_verified ? "valid" : "invalid"));
+                }
             } catch (IOException ioe) {
                 logger.error(ioe.getMessage());
+                System.exit(1);
             }
-
-            if (thepath.getSequence().isEmpty()) {
-                logger.info("**** Computing path");
-                MazePath path_sequence = themaze.findCorrectPath();
-                System.out.println("A valid path is " + path_sequence.getSequence());
-            } else {
-                logger.info("**** Verifying path");
-                Boolean path_verified = themaze.verifyPath(thepath);
-                System.out.println("The inputed path is " + thepath.getSequence());
-                System.out.println("The inputed path is " + (path_verified ? "valid" : "invalid"));
-            }
-
         } catch (ParseException pe) {
             logger.error(pe.getMessage());
         }
