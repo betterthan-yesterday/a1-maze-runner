@@ -3,15 +3,18 @@ package ca.mcmaster.se2aa4.mazerunner.algorithms;
 import java.util.Arrays;
 
 import ca.mcmaster.se2aa4.mazerunner.MazePath;
+import ca.mcmaster.se2aa4.mazerunner.algorithms.Movement.Direction;
+import ca.mcmaster.se2aa4.mazerunner.algorithms.Movement.Move;
 
 public class RighthandAlgorithm extends PathAlgorithm {
 
     public RighthandAlgorithm(int[][] maze_array, int[] start, int[] end) {
         this.maze_array = maze_array;
         this.start = start;
+        this.end = end;
         this.currentPos = start;
         this.currentDir = Direction.EAST;
-        this.end = end;
+        this.mover = new Movement();
     }
 
     @Override
@@ -20,15 +23,15 @@ public class RighthandAlgorithm extends PathAlgorithm {
         while (!Arrays.equals(currentPos, end)) {
             if (checkRight(currentDir)) {
                 seq += "R";
-                updateDir(Move.RIGHT);
+                currentDir = mover.updateDir(Move.RIGHT, currentDir);
                 seq += "F";
-                updatePos(Move.FORWARD);
+                currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
             } else if (checkFront(currentDir)) {
                 seq += "F";
-                updatePos(Move.FORWARD);
+                currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
             } else {
                 seq += "L";
-                updateDir(Move.LEFT);
+                currentDir = mover.updateDir(Move.LEFT, currentDir);
             }
         }
         return new MazePath(seq);
