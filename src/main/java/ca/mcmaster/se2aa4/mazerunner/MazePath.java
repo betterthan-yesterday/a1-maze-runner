@@ -46,20 +46,30 @@ public class MazePath {
     private void canonize() {
         String raw_seq = removeSpaces();
         StringBuilder canonical_seq = new StringBuilder();
+        StringBuilder move_count_str = new StringBuilder();
         
-        for (int i = 0; i < raw_seq.length(); i++) {
+        for (int i = 0; i < raw_seq.length()-1; i++) {
             char move = raw_seq.charAt(i);
+            char next_move = raw_seq.charAt(i+1);
 
             if (Character.isDigit(move)) {
-                int move_count = Character.getNumericValue(move);
+                if (Character.isDigit(next_move)) { // Checking for more numbers with more than one digit
+                    move_count_str.append(move);
+                    continue;
+                }
+                move_count_str.append(move);
+                int move_count = Integer.parseInt(move_count_str.toString());
+                move_count_str.setLength(0);
+
                 char actual_move = raw_seq.charAt(i+1);
-                for (int rep = 0; rep < move_count - 1; rep++) {
+                for (int rep = 0; rep < move_count-1; rep++) {
                     canonical_seq.append(actual_move);
                 }
-            } else {
+            } else { // No digit in front of the move
                 canonical_seq.append(move);
             }
         }
+        canonical_seq.append(raw_seq.charAt(raw_seq.length()-1)); // Append last move as it was ignored above
         canonical = canonical_seq.toString();
     }
 
