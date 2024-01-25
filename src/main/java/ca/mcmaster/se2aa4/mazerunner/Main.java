@@ -45,14 +45,14 @@ public class Main {
             System.exit(1);
         }
 
-        if (thepath.getSequence().isEmpty()) {
+        if (thepath.getRaw().isEmpty()) {
             logger.info("** Computing path");
             MazePath path_sequence = themaze.findCorrectPath();
-            System.out.println("A valid path is " + path_sequence.getSequence());
+            System.out.println("A valid path is " + path_sequence.getFactorized());
         } else {
             logger.info("** Verifying path");
             Boolean path_verified = themaze.verifyPath(thepath);
-            System.out.println("The inputed path is " + thepath.getSequence());
+            System.out.println("The inputed path is " + thepath.getRaw());
             System.out.println((path_verified ? "correct path" : "incorrect path"));
         }
 
