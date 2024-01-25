@@ -33,8 +33,8 @@ public class MazeRunner {
         return maze_solution;
     }
 
-    public boolean followPath(MazePath seq) {
-        Navigator nav = new Navigator(maze_array, seq);
+    public boolean followPath(MazePath path) {
+        Navigator nav = new Navigator(maze_array, path);
         boolean checkFromWest = nav.navigate(start, end);
         boolean checkFromEast = nav.navigate(end, start);
         return checkFromWest || checkFromEast;

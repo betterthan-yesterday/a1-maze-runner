@@ -8,12 +8,12 @@ import ca.mcmaster.se2aa4.mazerunner.Movement.Move;
 public class Navigator {
 
     int[][] maze_array;
-    MazePath sequence;
+    MazePath path;
     Movement mover;
 
-    public Navigator(int[][] arr, MazePath seq) {
+    public Navigator(int[][] arr, MazePath path) {
         this.maze_array = arr;
-        this.sequence = seq;
+        this.path = path;
         this.mover = new Movement();
     }
 
@@ -38,8 +38,8 @@ public class Navigator {
             currentDir = Direction.WEST;
         }
 
-        for (int i = 0; i < sequence.length(); i++) {
-            char move = sequence.getMove(i);
+        for (int i = 0; i < path.getCanonicalLength(); i++) {
+            char move = path.getMove(i);
             int[] newPos = new int[2];
             switch (move) {
                 case 'F' -> newPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);

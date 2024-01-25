@@ -2,21 +2,43 @@ package ca.mcmaster.se2aa4.mazerunner;
 
 public class MazePath {
 
-    private final String sequence;
+    private String raw_sequence;
+    private String canonical;
+    private String factorized;
 
     public MazePath(String path) {
-        this.sequence = path != null ? path : "";
+        this.raw_sequence = path != null ? path : "";
     }
 
-    public String getSequence() {
-        return sequence;
+    public String getRaw() {
+        return raw_sequence;
+    }
+
+    private String removeSpaces() {
+        return raw_sequence.replaceAll("\\s+", "");
+    }
+
+    private void factorize() {
+
+    }
+
+    private void canonize() {
+
+    }
+
+    public String getCanonical() {
+        return canonical;
+    }
+
+    public int getCanonicalLength() {
+        return canonical.length();
+    }
+
+    public String getFactorized() {
+        return factorized;
     }
 
     public char getMove(int index) {
-        return sequence.charAt(index);
-    }
-
-    public int length() {
-        return sequence.length();
+        return canonical.charAt(index);
     }
 }
