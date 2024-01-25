@@ -48,7 +48,7 @@ public class Main {
         if (thepath.getRaw().isEmpty()) {
             logger.info("** Computing path");
             MazePath path_sequence = themaze.findCorrectPath();
-            System.out.println("A valid path is " + path_sequence.getRaw());
+            System.out.println("A valid path is " + path_sequence.getFactorized());
         } else {
             logger.info("** Verifying path");
             Boolean path_verified = themaze.verifyPath(thepath);
