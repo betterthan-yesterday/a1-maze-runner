@@ -17,13 +17,15 @@ public class Navigator {
         this.mover = new Movement();
     }
 
-    private boolean checkValid(int[] pos) {
+    private boolean checkInvalid(int[] pos) {
         int row = pos[0];
         int col = pos[1];
-        if (maze_array[row][col] == 1) { // Trying to move into a wall
-            return false;
+        if (maze_array[row][col] == 1) { // Detect wall
+            return true;
+        } else if (row < 0 || row >= maze_array.length || col < 0 || col >= maze_array[0].length) { // Detect out of bounds
+            return true;
         }
-        return true;
+        return false;
     }
 
     public boolean navigate(int[] start, int[] end) {
@@ -40,24 +42,19 @@ public class Navigator {
 
         for (int i = 0; i < path.getCanonicalLength(); i++) {
             char move = path.getMove(i);
-            int[] newPos = new int[2];
             switch (move) {
-                case 'F' -> newPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
+                case 'F' -> currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
                 case 'L' -> currentDir = mover.updateDir(Move.LEFT, currentDir);
                 case 'R' -> currentDir = mover.updateDir(Move.RIGHT, currentDir);
-                case 'B' -> newPos = mover.updatePos(Move.BACKWARD, currentDir, currentPos);
+                case 'B' -> currentPos = mover.updatePos(Move.BACKWARD, currentDir, currentPos);
             }
 
-            // The navigator will stay in the same spot if it tries to move foward into a wall,
-            // but will continue to follow the sequence.
-            if (checkValid(newPos))
-                currentPos = newPos;
-
-            // If the navigator reaches the end of the maze, return true regardless of if there
-            // are still moves left in the sequence.
-            if (Arrays.equals(currentPos, end)) {
-                return true;
-            }
+            // If the navigator tries to move into a wall or goes out of bounds, return false
+            if (checkInvalid(currentPos))
+                return false;
+        }
+        if (Arrays.equals(currentPos, end)) {
+            return true;
         }
         return false;
     }

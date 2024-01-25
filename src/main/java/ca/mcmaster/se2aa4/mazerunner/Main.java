@@ -52,7 +52,7 @@ public class Main {
         } else {
             logger.info("** Verifying path");
             Boolean path_verified = themaze.verifyPath(thepath);
-            System.out.println("The inputed path is " + thepath.getRaw());
+            logger.info("The inputed path is " + thepath.getRaw());
             System.out.println((path_verified ? "correct path" : "incorrect path"));
         }
 
