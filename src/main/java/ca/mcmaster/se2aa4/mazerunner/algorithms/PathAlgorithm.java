@@ -17,6 +17,8 @@ public abstract class PathAlgorithm {
         this.maze_array = array;
         this.start = start;
         this.end = end;
+
+        // Default Values
         this.currentPos = new int[2];
         this.currentPos[0] = start[0];
         this.currentPos[1] = start[1];

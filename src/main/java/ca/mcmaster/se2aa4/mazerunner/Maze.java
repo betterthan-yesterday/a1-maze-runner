@@ -6,14 +6,13 @@ import java.io.IOException;
 public class Maze {
 
     public final File PATH_FILE;
-    public int[][] maze_array;
     private MazeDecoder decoder;
+    private final int[][] maze_array;
     private MazeRunner runner;
 
     public Maze(File filename) throws IOException {
         this.PATH_FILE = filename;
         this.decoder = new MazeDecoder(PATH_FILE);
-
         this.maze_array = decoder.decode();
         this.runner = new MazeRunner(maze_array);
     }
