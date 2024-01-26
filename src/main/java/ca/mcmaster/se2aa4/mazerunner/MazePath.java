@@ -7,7 +7,7 @@ public class MazePath {
     private String factorized;
 
     public MazePath(String path) {
-        this.raw_sequence = path != null ? path : "";
+        this.raw_sequence = path;
         factorize();
         canonize();
     }
