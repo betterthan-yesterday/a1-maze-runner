@@ -46,7 +46,8 @@ public class Navigator {
                 case 'F' -> currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
                 case 'L' -> currentDir = mover.updateDir(Move.LEFT, currentDir);
                 case 'R' -> currentDir = mover.updateDir(Move.RIGHT, currentDir);
-                case 'B' -> currentPos = mover.updatePos(Move.BACKWARD, currentDir, currentPos);
+                // case 'B' -> currentPos = mover.updatePos(Move.BACKWARD, currentDir, currentPos);
+                default -> {return false;}
             }
 
             // If the navigator tries to move into a wall or goes out of bounds, return false
