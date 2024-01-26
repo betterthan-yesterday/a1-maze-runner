@@ -7,9 +7,9 @@ import ca.mcmaster.se2aa4.mazerunner.Movement.Move;
 
 public class Navigator {
 
-    int[][] maze_array;
-    MazePath path;
-    Movement mover;
+    private final int[][] maze_array;
+    private final MazePath path;
+    private Movement mover;
 
     public Navigator(int[][] arr, MazePath path) {
         this.maze_array = arr;

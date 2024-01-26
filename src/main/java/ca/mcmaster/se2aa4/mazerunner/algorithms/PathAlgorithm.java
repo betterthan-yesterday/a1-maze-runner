@@ -6,12 +6,25 @@ import ca.mcmaster.se2aa4.mazerunner.Movement.Direction;
 
 public abstract class PathAlgorithm {
 
-    public int[][] maze_array;
-    public int[] start;
-    public int[] end;
+    protected final int[][] maze_array;
+    protected final int[] start;
+    protected final int[] end;
     protected int[] currentPos;
     protected Direction currentDir;
     protected Movement mover;
+
+    public PathAlgorithm(int[][] array, int[] start, int[] end) {
+        this.maze_array = array;
+        this.start = start;
+        this.end = end;
+
+        // Default Values
+        this.currentPos = new int[2];
+        this.currentPos[0] = start[0];
+        this.currentPos[1] = start[1];
+        this.currentDir = Direction.EAST;
+        this.mover = new Movement();
+    }
 
     public abstract MazePath solve();
 
