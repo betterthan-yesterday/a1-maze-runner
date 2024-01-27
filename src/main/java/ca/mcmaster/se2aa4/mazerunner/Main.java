@@ -62,26 +62,32 @@ public class Main {
         Options options = new Options();
         Option input_file = new Option("i", "input", true, "File to read");
         Option input_path = new Option("p", "path", true, "Path to verify");
+        Option input_algo = new Option("method", true, "Algorithm to use");
         input_file.setRequired(true);
         input_path.setRequired(false);
+        input_algo.setRequired(false);
         options.addOption(input_file);
         options.addOption(input_path);
+        options.addOption(input_algo);
 
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd = parser.parse(options, args);
 
         File file_to_read = new File(cmd.getOptionValue(input_file));
         String path_to_verify = cmd.getOptionValue(input_path);
-        return new Configuration(file_to_read, path_to_verify);
+        String algo_to_use = cmd.getOptionValue(input_algo, "righthand");
+        return new Configuration(file_to_read, path_to_verify, algo_to_use);
     }
 
-    private record Configuration(File filename, String path) {
+    private record Configuration(File filename, String path, String algo) {
         
         Configuration {
             if (!filename.exists())
                 throw new IllegalArgumentException("File does not exist");
             if (path != null && path.isEmpty())
                 throw new IllegalArgumentException("Path cannot be empty");
+            if (!(algo.equals("righthand") || algo.equals("tremaux")))
+                throw new IllegalArgumentException("Algorithm cannot be empty");
         }
     }
 }

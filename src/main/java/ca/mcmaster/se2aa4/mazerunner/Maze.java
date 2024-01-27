@@ -22,7 +22,7 @@ public class Maze {
     }
 
     private void getStartEnd() {
-        for (int row = 0; row < maze_array.length; row++) {
+        for (int row = 0; row < maze_array.length; row++) { // Maybe belongs in MazeDecoder
             if (maze_array[row][0] == 0) {
                 start[0] = row;
                 start[1] = 0;
