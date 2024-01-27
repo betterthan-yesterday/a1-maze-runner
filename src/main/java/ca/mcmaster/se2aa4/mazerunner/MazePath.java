@@ -34,7 +34,7 @@ public class MazePath {
                 move_count = 1;
             }
 
-            if (i == raw_seq.length() - 1) {
+            if (i == raw_seq.length() - 1) { // Append last move_count and move
                 if (move_count > 1)
                     factorized_seq.append(Integer.toString(move_count));
                 factorized_seq.append(move);
@@ -53,7 +53,7 @@ public class MazePath {
             char next_move = raw_seq.charAt(i+1);
 
             if (Character.isDigit(move)) {
-                if (Character.isDigit(next_move)) { // Checking for more numbers with more than one digit
+                if (Character.isDigit(next_move)) { // Checking for numbers with more than one digit
                     move_count_str.append(move);
                     continue;
                 }
