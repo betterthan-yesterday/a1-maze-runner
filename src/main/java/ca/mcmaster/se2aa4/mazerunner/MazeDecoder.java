@@ -8,8 +8,6 @@ import java.io.IOException;
 public class MazeDecoder {
 
     private final File filepath;
-    private int column_num;
-    private int row_num;
 
     public MazeDecoder(File filepath) {
         this.filepath= filepath;
@@ -24,9 +22,6 @@ public class MazeDecoder {
             row_num++;
         }
         reader.close();
-
-        this.column_num = column_num;
-        this.row_num = row_num;
         
         int[][] maze_array = new int[row_num][column_num];
         return maze_array;
@@ -50,15 +45,14 @@ public class MazeDecoder {
 
     public int[][] decode() throws IOException {
         int[][] decoded = getMazeSize();
-        System.out.println("The maze is " + row_num + " rows by " + column_num + " columns");
         BufferedReader reader = new BufferedReader(new FileReader(filepath));
         String line;
         int row_count = 0;
         while ((line = reader.readLine()) != null) {
             for (int idx = 0; idx < line.length(); idx++) {
-                if (line.charAt(idx) == '#') {
+                if (line.charAt(idx) == '#') { // Wall
                     decoded[row_count][idx] = 1;
-                } else if (line.charAt(idx) == ' ') {
+                } else if (line.charAt(idx) == ' ') { // Empty
                     decoded[row_count][idx] = 0;
                 }
             }
