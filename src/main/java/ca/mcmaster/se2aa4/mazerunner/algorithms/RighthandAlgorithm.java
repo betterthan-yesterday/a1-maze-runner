@@ -15,10 +15,10 @@ public class RighthandAlgorithm extends PathAlgorithm {
     public boolean checkRight(Direction dir) {
         boolean right_is_path = false;
         switch (dir) {
-            case NORTH -> right_is_path = maze_array[currentPos[0]][currentPos[1]+1] == 0;
-            case EAST -> right_is_path = maze_array[currentPos[0]+1][currentPos[1]] == 0;
-            case SOUTH -> right_is_path = maze_array[currentPos[0]][currentPos[1]-1] == 0;
-            case WEST -> right_is_path = maze_array[currentPos[0]-1][currentPos[1]] == 0;
+            case NORTH -> right_is_path = maze_array[currentPos[0]][currentPos[1]+1] == 1;
+            case EAST -> right_is_path = maze_array[currentPos[0]+1][currentPos[1]] == 1;
+            case SOUTH -> right_is_path = maze_array[currentPos[0]][currentPos[1]-1] == 1;
+            case WEST -> right_is_path = maze_array[currentPos[0]-1][currentPos[1]] == 1;
         }
         return right_is_path;
     }
@@ -26,10 +26,10 @@ public class RighthandAlgorithm extends PathAlgorithm {
     public boolean checkFront(Direction dir) {
         boolean front_is_path = false;
         switch (dir) {
-            case NORTH -> front_is_path = maze_array[currentPos[0]-1][currentPos[1]] == 0;
-            case EAST -> front_is_path = maze_array[currentPos[0]][currentPos[1]+1] == 0;
-            case SOUTH -> front_is_path = maze_array[currentPos[0]+1][currentPos[1]] == 0;
-            case WEST -> front_is_path = maze_array[currentPos[0]][currentPos[1]-1] == 0;
+            case NORTH -> front_is_path = maze_array[currentPos[0]-1][currentPos[1]] == 1;
+            case EAST -> front_is_path = maze_array[currentPos[0]][currentPos[1]+1] == 1;
+            case SOUTH -> front_is_path = maze_array[currentPos[0]+1][currentPos[1]] == 1;
+            case WEST -> front_is_path = maze_array[currentPos[0]][currentPos[1]-1] == 1;
         }
         return front_is_path;
     }

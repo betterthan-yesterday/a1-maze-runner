@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import ca.mcmaster.se2aa4.mazerunner.algorithms.PathAlgorithm;
 import ca.mcmaster.se2aa4.mazerunner.algorithms.RighthandAlgorithm;
+import ca.mcmaster.se2aa4.mazerunner.algorithms.TremauxAlgorithm;
 
 public class Maze {
 
@@ -25,11 +26,11 @@ public class Maze {
 
     private void getStartEnd() {
         for (int row = 0; row < maze_array.length; row++) { // Maybe belongs in MazeDecoder
-            if (maze_array[row][0] == 0) {
+            if (maze_array[row][0] == 1) {
                 start[0] = row;
                 start[1] = 0;
             }
-            if (maze_array[row][maze_array[0].length - 1] == 0) {
+            if (maze_array[row][maze_array[0].length - 1] == 1) {
                 end[0] = row;
                 end[1] = maze_array[0].length - 1;
             }
