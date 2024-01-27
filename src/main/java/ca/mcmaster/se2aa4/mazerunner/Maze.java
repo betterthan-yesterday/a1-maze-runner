@@ -13,12 +13,14 @@ public class Maze {
     private final int[][] maze_array;
     private int[] start = new int[2];
     private int[] end = new int[2];
+    private String algorithm;
 
-    public Maze(File filename) throws IOException {
+    public Maze(File filename, String algo) throws IOException {
         this.PATH_FILE = filename;
         this.decoder = new MazeDecoder(PATH_FILE);
         this.maze_array = decoder.decode();
         getStartEnd();
+        this.algorithm = algo;
     }
 
     private void getStartEnd() {
@@ -39,7 +41,11 @@ public class Maze {
     }
 
     public MazePath findCorrectPath() {
-        PathAlgorithm algo = new RighthandAlgorithm(maze_array, start, end);
+        PathAlgorithm algo = null;
+        switch (algorithm) {
+            case "tremaux" -> algo = new TremauxAlgorithm(maze_array, start, end);
+            default -> algo = new RighthandAlgorithm(maze_array, start, end);
+        }
         MazePath maze_solution = algo.solve();
         return maze_solution;
     }

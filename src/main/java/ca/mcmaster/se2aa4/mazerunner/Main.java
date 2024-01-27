@@ -32,7 +32,7 @@ public class Main {
 
         Maze themaze = null;
         try {
-            themaze = new Maze(config.filename);
+            themaze = new Maze(config.filename, config.algo);
 
             logger.info("** Reading the maze from file " + config.filename);
             // themaze.printMaze();
@@ -87,7 +87,7 @@ public class Main {
             if (path != null && path.isEmpty())
                 throw new IllegalArgumentException("Path cannot be empty");
             if (!(algo.equals("righthand") || algo.equals("tremaux")))
-                throw new IllegalArgumentException("Algorithm cannot be empty");
+                throw new IllegalArgumentException("Algorithm not found");
         }
     }
 }
