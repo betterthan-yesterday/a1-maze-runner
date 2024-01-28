@@ -9,6 +9,17 @@ import ca.mcmaster.se2aa4.mazerunner.Movement.Move;
 public class RighthandAlgorithm extends PathAlgorithm {
 
     public RighthandAlgorithm(int[][] maze_array, int[] start, int[] end) {
+        /* From PathAlgorithm.java:
+        this.maze_array = array;
+        this.start = start;
+        this.end = end;
+
+        this.currentPos = new int[2];
+        this.currentPos[0] = start[0];
+        this.currentPos[1] = start[1];
+        this.currentDir = Direction.EAST;
+        this.mover = new Movement();
+        */
         super(maze_array, start, end);
     }
 
