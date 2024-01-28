@@ -36,8 +36,52 @@ public class TremauxAlgorithm extends PathAlgorithm {
             int left_tile = checkLeft(currentDir);
             int right_tile = checkRight(currentDir);
             int front_tile = checkFront(currentDir);
-        }
 
+            for (int[] row : modified_maze)
+                System.out.println(Arrays.toString(row));
+            logger.info("current: " + Arrays.toString(currentPos));
+            logger.info(left_tile + " " + right_tile + " " + front_tile);
+            
+            boolean is_junction = (((left_tile>0)?1:0) + ((right_tile>0)?1:0) + ((front_tile>0)?1:0)) > 1;
+            if (is_junction) {
+                logger.info("junction");
+                markTile(modified_maze, Move.BACKWARD);
+                if (right_tile == 1) {
+                    currentDir = mover.updateDir(Move.RIGHT, currentDir);
+                    markTile(modified_maze, Move.FORWARD);
+                    currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
+                } else if (left_tile == 1) {
+                    currentDir = mover.updateDir(Move.LEFT, currentDir);
+                    markTile(modified_maze, Move.FORWARD);
+                    currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
+                } else if (front_tile == 1){
+                    markTile(modified_maze, Move.FORWARD);
+                    currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
+                } else { // dead end - U-turn
+                    currentDir = mover.updateDir(Move.LEFT, currentDir); 
+                    currentDir = mover.updateDir(Move.LEFT, currentDir); 
+                    markTile(modified_maze, Move.FORWARD);
+                    currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
+                }
+            } else {
+                logger.info("single path");
+                if (right_tile != 0) {
+                    currentDir = mover.updateDir(Move.RIGHT, currentDir);
+                    currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
+                } else if (left_tile != 0) {
+                    currentDir = mover.updateDir(Move.LEFT, currentDir);
+                    currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
+                } else if (front_tile != 0) {
+                    if (front_tile == 2) { // If the front tile has already been marked, mark it again, then move on top
+                        markTile(modified_maze, Move.FORWARD);
+                    }
+                    currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
+                } else { // dead end - U-turn
+                    currentDir = mover.updateDir(Move.LEFT, currentDir); 
+                    currentDir = mover.updateDir(Move.LEFT, currentDir); 
+                }
+            }
+        }
 
         currentPos = start;
         String seq = "FF";
