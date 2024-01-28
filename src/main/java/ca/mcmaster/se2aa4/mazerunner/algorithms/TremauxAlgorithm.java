@@ -130,7 +130,7 @@ public class TremauxAlgorithm extends PathAlgorithm {
             int left_tile = checkLeft(currentDir);
             int right_tile = checkRight(currentDir);
             int front_tile = checkFront(currentDir);
-
+            logger.info("current: " + Arrays.toString(currentPos));
             /*
              * Righthand algorithm, but also following single marked tiles according
              * to Tremaux's algorithm.
@@ -148,6 +148,11 @@ public class TremauxAlgorithm extends PathAlgorithm {
                 currentDir = mover.updateDir(Move.LEFT, currentDir);
                 seq += "F";
                 currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
+            } else { // dead end - U-turn
+                seq += "L";
+                currentDir = mover.updateDir(Move.LEFT, currentDir); 
+                seq += "L";
+                currentDir = mover.updateDir(Move.LEFT, currentDir); 
             }
         }
 
