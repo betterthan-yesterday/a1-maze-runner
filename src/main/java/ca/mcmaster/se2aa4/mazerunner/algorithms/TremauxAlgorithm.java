@@ -38,41 +38,72 @@ public class TremauxAlgorithm extends PathAlgorithm {
             int front_tile = checkFront(currentDir);
 
             for (int[] row : modified_maze)
-                System.out.println(Arrays.toString(row));
+                logger.info(Arrays.toString(row));
             logger.info("current: " + Arrays.toString(currentPos));
             logger.info(left_tile + " " + right_tile + " " + front_tile);
             
             boolean is_junction = (((left_tile>0)?1:0) + ((right_tile>0)?1:0) + ((front_tile>0)?1:0)) > 1;
             if (is_junction) {
                 logger.info("junction");
-                markTile(modified_maze, Move.BACKWARD);
-                if (right_tile == 1) {
-                    currentDir = mover.updateDir(Move.RIGHT, currentDir);
-                    markTile(modified_maze, Move.FORWARD);
-                    currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
-                } else if (left_tile == 1) {
-                    currentDir = mover.updateDir(Move.LEFT, currentDir);
-                    markTile(modified_maze, Move.FORWARD);
-                    currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
-                } else if (front_tile == 1){
-                    markTile(modified_maze, Move.FORWARD);
-                    currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
-                } else { // dead end - U-turn
-                    currentDir = mover.updateDir(Move.LEFT, currentDir); 
-                    currentDir = mover.updateDir(Move.LEFT, currentDir); 
-                    markTile(modified_maze, Move.FORWARD);
-                    currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
+                /*
+                 * Check junction has at least one path that is double marked. The assumption is made
+                 * that if at least one path is double marked, then the junction has been visited
+                 * enough times to be a dead end.
+                 * The reason the min between the paths is taken is because that was the first path
+                 * taken into the dead end and the algorithm is backtracking.
+                 */
+                if (right_tile == 3 || left_tile == 3 || front_tile == 3) {
+                    left_tile = (left_tile == 0) ? 999 : left_tile;
+                    right_tile = (right_tile == 0) ? 999 : right_tile;
+                    front_tile = (front_tile == 0) ? 999 : front_tile;
+                    int min = Math.min(Math.min(left_tile, right_tile), front_tile);
+                    if (min == right_tile) {
+                        currentDir = mover.updateDir(Move.RIGHT, currentDir);
+                        markTile(modified_maze, Move.FORWARD);
+                        currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
+                    } else if (min == front_tile) {
+                        markTile(modified_maze, Move.FORWARD);
+                        currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
+                    } else if (min == left_tile) {
+                        currentDir = mover.updateDir(Move.LEFT, currentDir);
+                        markTile(modified_maze, Move.FORWARD);
+                        currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
+                    }
+                } else {
+                    if (right_tile == 1) {
+                        currentDir = mover.updateDir(Move.RIGHT, currentDir);
+                        markTile(modified_maze, Move.FORWARD);
+                        currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
+                    } else if (front_tile == 1){
+                        markTile(modified_maze, Move.FORWARD);
+                        currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
+                    } else if (left_tile == 1) {
+                        currentDir = mover.updateDir(Move.LEFT, currentDir);
+                        markTile(modified_maze, Move.FORWARD);
+                        currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
+                    } else { // dead end - U-turn
+                        currentDir = mover.updateDir(Move.LEFT, currentDir); 
+                        currentDir = mover.updateDir(Move.LEFT, currentDir); 
+                        markTile(modified_maze, Move.FORWARD);
+                        currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
+                    }
                 }
             } else {
                 logger.info("single path");
                 if (right_tile != 0) {
                     currentDir = mover.updateDir(Move.RIGHT, currentDir);
+                    if (checkFront(currentDir) == 2) {
+                        markTile(modified_maze, Move.FORWARD);
+                    }
+                    currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
+                } else if (front_tile != 0) {
+                    if (checkFront(currentDir) == 2) { // If the front tile has already been marked, mark it again, then move on top
+                        markTile(modified_maze, Move.FORWARD);
+                    }
                     currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
                 } else if (left_tile != 0) {
                     currentDir = mover.updateDir(Move.LEFT, currentDir);
-                    currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
-                } else if (front_tile != 0) {
-                    if (front_tile == 2) { // If the front tile has already been marked, mark it again, then move on top
+                    if (checkFront(currentDir) == 2) {
                         markTile(modified_maze, Move.FORWARD);
                     }
                     currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
