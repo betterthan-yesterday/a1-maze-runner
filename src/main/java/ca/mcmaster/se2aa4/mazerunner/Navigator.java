@@ -20,7 +20,7 @@ public class Navigator {
     private boolean checkInvalid(int[] pos) {
         int row = pos[0];
         int col = pos[1];
-        if (maze_array[row][col] == 1) { // Detect wall
+        if (maze_array[row][col] == 0) { // Detect wall
             return true;
         } else if (row < 0 || row >= maze_array.length || col < 0 || col >= maze_array[0].length) { // Detect out of bounds
             return true;

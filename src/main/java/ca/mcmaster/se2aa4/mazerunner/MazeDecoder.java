@@ -51,9 +51,9 @@ public class MazeDecoder {
         while ((line = reader.readLine()) != null) {
             for (int idx = 0; idx < line.length(); idx++) {
                 if (line.charAt(idx) == '#') { // Wall
-                    decoded[row_count][idx] = 1;
-                } else if (line.charAt(idx) == ' ') { // Empty
                     decoded[row_count][idx] = 0;
+                } else if (line.charAt(idx) == ' ') { // Empty
+                    decoded[row_count][idx] = 1;
                 }
             }
             row_count++;
