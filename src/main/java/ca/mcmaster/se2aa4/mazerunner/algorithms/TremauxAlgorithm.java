@@ -40,7 +40,6 @@ public class TremauxAlgorithm extends PathAlgorithm {
             for (int[] row : modified_maze)
                 logger.info(Arrays.toString(row));
             logger.info("current: " + Arrays.toString(currentPos));
-            logger.info(left_tile + " " + right_tile + " " + front_tile);
             
             boolean is_junction = (((left_tile>0)?1:0) + ((right_tile>0)?1:0) + ((front_tile>0)?1:0)) > 1;
             if (is_junction) {
@@ -51,6 +50,7 @@ public class TremauxAlgorithm extends PathAlgorithm {
                  * enough times to be a dead end.
                  * The reason the min between the paths is taken is because that was the first path
                  * taken into the dead end and the algorithm is backtracking.
+                 * Priority: RIGHT->FORWARD->LEFT
                  */
                 if (right_tile == 3 || left_tile == 3 || front_tile == 3) {
                     left_tile = (left_tile == 0) ? 999 : left_tile;
@@ -89,7 +89,6 @@ public class TremauxAlgorithm extends PathAlgorithm {
                     }
                 }
             } else {
-                logger.info("single path");
                 if (right_tile != 0) {
                     currentDir = mover.updateDir(Move.RIGHT, currentDir);
                     if (checkFront(currentDir) == 2) {
@@ -114,8 +113,35 @@ public class TremauxAlgorithm extends PathAlgorithm {
             }
         }
 
-        currentPos = start;
-        String seq = "FF";
+        currentPos[0] = start[0];
+        currentPos[1] = start[1];
+        String seq = "";
+        while (!Arrays.equals(currentPos, end)) {
+            int left_tile = checkLeft(currentDir);
+            int right_tile = checkRight(currentDir);
+            int front_tile = checkFront(currentDir);
+            // boolean is_junction = (((left_tile>0)?1:0) + ((right_tile>0)?1:0) + ((front_tile>0)?1:0)) > 1;
+            // if (is_junction) {
+                // Follow the marked path with priority RIGHT->FORWARD->LEFT to keep consistent
+                if (right_tile == 1 || right_tile == 2) {
+                    seq += "R";
+                    currentDir = mover.updateDir(Move.RIGHT, currentDir);
+                    seq += "F";
+                    currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
+                } else if (front_tile == 1 || front_tile == 2) {
+                    seq += "F";
+                    currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
+                } else if (left_tile == 1 || left_tile == 2) {
+                    seq += "L";
+                    currentDir = mover.updateDir(Move.LEFT, currentDir);
+                    seq += "F";
+                    currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
+                } else { // dead end - U-turn
+                    currentDir = mover.updateDir(Move.LEFT, currentDir); 
+                    currentDir = mover.updateDir(Move.LEFT, currentDir); 
+                }
+            // }
+        }
 
         return new MazePath(seq);
     }
