@@ -44,6 +44,7 @@ public class TremauxAlgorithm extends PathAlgorithm {
             boolean is_junction = (((left_tile>0)?1:0) + ((right_tile>0)?1:0) + ((front_tile>0)?1:0)) > 1;
             if (is_junction) {
                 logger.info("junction");
+                markTile(modified_maze, Move.BACKWARD);
                 /*
                  * Check junction has at least one path that is double marked. The assumption is made
                  * that if at least one path is double marked, then the junction has been visited
@@ -86,7 +87,7 @@ public class TremauxAlgorithm extends PathAlgorithm {
                         currentDir = mover.updateDir(Move.LEFT, currentDir);
                         markTile(modified_maze, Move.FORWARD);
                         currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
-                    } else { // dead end - U-turn
+                    } else { // "Dead end" in junction means that the other available paths are all single marked, so U-turn and mark
                         currentDir = mover.updateDir(Move.LEFT, currentDir); 
                         currentDir = mover.updateDir(Move.LEFT, currentDir); 
                         markTile(modified_maze, Move.FORWARD);
@@ -103,17 +104,20 @@ public class TremauxAlgorithm extends PathAlgorithm {
                     currentDir = mover.updateDir(Move.RIGHT, currentDir);
                     if (checkFront(currentDir) == 2) {
                         markTile(modified_maze, Move.FORWARD);
+                        currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
                     }
                     currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
                 } else if (front_tile != 0) {
                     if (checkFront(currentDir) == 2) {
                         markTile(modified_maze, Move.FORWARD);
+                        currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
                     }
                     currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
                 } else if (left_tile != 0) {
                     currentDir = mover.updateDir(Move.LEFT, currentDir);
                     if (checkFront(currentDir) == 2) {
                         markTile(modified_maze, Move.FORWARD);
+                        currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
                     }
                     currentPos = mover.updatePos(Move.FORWARD, currentDir, currentPos);
                 } else { // dead end - U-turn
